@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
       
-      - nane: Hola mundo
+      - name: Hola mundo
         run: echo "Hola mundo"
 
       
