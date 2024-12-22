@@ -1,4 +1,5 @@
-name: Workflow
+name: Main Workflow
+
 on:
   push:
     branches:
@@ -7,12 +8,18 @@ on:
 jobs:
   SAST:
     runs-on: ubuntu-24.04
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       
       - name: Hola mundo
         run: echo "Hola mundo"
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@<action version> # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       
