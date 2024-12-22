@@ -22,8 +22,8 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.organization=SemaGot 
-            -Dsonar.projectKey=laboratorio-final-devsecops
+            -Dsonar.organization=goten60 
+            -Dsonar.projectKey=goten60_laboratorio-final-devsecops
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
