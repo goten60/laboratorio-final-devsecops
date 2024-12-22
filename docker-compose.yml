@@ -1,0 +1,19 @@
+
+services:
+  reddit-clone:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reddit-clone
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/reddit-clone
+      - /reddit-clone/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
