@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - feature-jm
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   SAST:
@@ -18,7 +20,7 @@ jobs:
         run: echo "Hola mundo3"
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4.1.0 
+        uses: SonarSource/sonarqube-scan-action@v4
         with:
           projectBaseDir: .
           args: >
