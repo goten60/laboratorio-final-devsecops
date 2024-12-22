@@ -18,7 +18,12 @@ jobs:
         run: echo "Hola mundo"
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4.1.0 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+        uses: SonarSource/sonarqube-scan-action@v4.1.0 
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=SemaGot # For SonarQube Cloud only
+            -Dsonar.projectKey=laboratorio-final-devsecops
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
