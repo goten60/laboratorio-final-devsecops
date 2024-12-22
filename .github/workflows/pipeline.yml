@@ -28,7 +28,7 @@ jobs:
         run: echo "Hola mundo3"
 
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v4.2.1
         with:
           projectBaseDir: .
           args: >
@@ -36,5 +36,15 @@ jobs:
             -Dsonar.projectKey=goten60_laboratorio-final-devsecops
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+      # Check the Quality Gate status.
+      - name: SonarQube Server Quality Gate check
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
+        with:
+          pollingTimeoutSec: 300
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
 
       
