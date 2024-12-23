@@ -73,7 +73,7 @@ jobs:
           path: '.'
           format: 'HTML'
           args: >
-            --failOnCVSS 9
+            --failOnCVSS 1
             --enableRetired
 
       - name: Upload Test Result
