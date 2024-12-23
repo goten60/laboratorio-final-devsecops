@@ -8,13 +8,49 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  SAST:
+  
+  # SAST:
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+
+  #     - name: Install dependencies
+  #       run: npm install
+      
+  #     - name: Hola mundo
+  #       run: echo "Hola mundo3"
+
+  #     # scan SAST 2
+  #     - name: SonarQube Scan
+  #       uses: SonarSource/sonarqube-scan-action@v4.2.1
+  #       with:
+  #         projectBaseDir: .
+  #         args: >
+  #           -Dsonar.organization=goten60 
+  #           -Dsonar.projectKey=goten60_laboratorio-final-devsecops
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+  #     # Check the Quality Gate status.
+  #     - name: SonarQube Server Quality Gate check
+  #       id: sonarqube-quality-gate-check
+  #       uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
+  SCA:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -24,26 +60,23 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Hola mundo
-        run: echo "Hola mundo3"
-
-      # scan SAST 2
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4.2.1
+      - name: Dependency Check
+        uses: dependency-check/Dependency-Check_Action@1.1.0
+        env:
+          JAVA_HOME: /opt/jdk
+        id: Depcheck
         with:
-          projectBaseDir: .
+          project: '${{ github.event.repository.name }}'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
           args: >
-            -Dsonar.organization=goten60 
-            -Dsonar.projectKey=goten60_laboratorio-final-devsecops
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
-      # Check the Quality Gate status.
-      - name: SonarQube Server Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          
+            --failOnCVSS 7
+            --enableRetired
 
+      - name: Upload Test Result
+        uses: actions/upload-artifact@master
+        with:
+          name: Depcheck Report
+          path: ${{github.workspace}}/reports
       
