@@ -27,6 +27,7 @@ jobs:
       - name: Hola mundo
         run: echo "Hola mundo3"
 
+      # scan SAST
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4.2.1
         with:
