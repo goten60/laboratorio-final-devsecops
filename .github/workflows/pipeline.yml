@@ -109,7 +109,13 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --sarif-file-output=snyk.sarif --file=reporte.html
+          args: --sarif-file-output=snyk.sarif --json-file-output=snyk.json
+
+      - name: install snyk-to-html
+        run: |
+          npm install snyk-to-html -g
+          snyk-to-html -o reporte.html < snyk.json
+          
       
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
