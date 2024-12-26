@@ -82,7 +82,7 @@ jobs:
   #         name: Depcheck Report
   #         path: ${{github.workspace}}/reports
       
-  snyk-analysis:
+  SCA (snyk):
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -96,6 +96,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       
+      #opcional, envia resultado a snyk cloud
       - name: Run Snyk and send to monitor cloud
         uses: snyk/actions/node@master
         env:
@@ -112,17 +113,19 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif --json-file-output=snyk.json --all-projects
 
+      # se genera reporte en html
       - name: install snyk-to-html
         run: |
           npm install snyk-to-html -g
           snyk-to-html -o reporte.html < snyk.json
           
-      
+      # envia resultado a GitHub Code Scanning
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
       
+      # sube resultado como artefacto 
       - name: Upload Test Result
         uses: actions/upload-artifact@master
         with:
