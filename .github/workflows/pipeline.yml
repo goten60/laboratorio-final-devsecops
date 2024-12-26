@@ -82,7 +82,8 @@ jobs:
   #         name: Depcheck Report
   #         path: ${{github.workspace}}/reports
       
-  SCA (snyk):
+  SCA_SNYK:
+    name: SCA with Snyk 
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -131,4 +132,6 @@ jobs:
         with:
           name: Snyk Report
           path: reporte.html
+  
+  
 
