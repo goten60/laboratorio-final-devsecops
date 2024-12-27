@@ -177,4 +177,6 @@ jobs:
       with:
         image-ref: 'goten60/cursodevsecops-lab:latest'
         format: 'table'
+        exit-code: '1'
+        severity: 'CRITICAL,HIGH'
 
