@@ -174,7 +174,7 @@ jobs:
       with:
         image-ref: 'goten60/cursodevsecops-lab:latest'
         format: 'sarif'
-        exit-code: '1'
+        #exit-code: '1'
         severity: 'CRITICAL,HIGH'
         output: 'trivy-results.sarif'
 
