@@ -1,4 +1,5 @@
-name: Main Workflow
+name: DevSecOps Workflow 
+description: "Workflow to run DevSecOps tasks"
 
 on:
   push:
