@@ -6,6 +6,8 @@ on:
       - feature-jm
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    
 
 jobs:
   #comentario
@@ -98,7 +100,7 @@ jobs:
       - name: Run Snyk and send to monitor cloud
         uses: snyk/actions/node@master
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} 
         with:
           command: monitor
           args: --all-projects
