@@ -161,9 +161,9 @@ jobs:
         push: true
         tags: ${{ env.LATEST_TAG }}
 
-    # - name: Test
-    #   run: |
-    #     docker run --rm ${{ env.LATEST_TAG }}  
+    - name: Test
+      run: |
+        docker run -d --rm -p 3000:3000 ${{ env.LATEST_TAG }}  
 
   DockerScan:
     name: Image Scan with Trivy
