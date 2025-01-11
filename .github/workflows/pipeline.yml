@@ -6,7 +6,8 @@ on:
       - feature-jm
   workflow_dispatch:
     
-
+env:
+  LATEST_TAG: goten60/cursodevsecops-lab:latest
 
 jobs:
   
@@ -151,16 +152,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: goten60/cursodevsecops-lab:latest
-
-
-    # - name: Docker Build
-    #   run: |
-    #     docker build --tag goten60/cursodevsecops-lab:latest .
-
-    # - name: Push Docker
-    #   run: |
-    #     docker push goten60/cursodevsecops-lab:latest
+        tags: ${{ env.LATEST_TAG }}
 
   DockerScan:
     name: Image Scan with Trivy
