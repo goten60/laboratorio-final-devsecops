@@ -165,7 +165,7 @@ jobs:
           push: true
           tags: ${{ env.LATEST_TAG }}
 
-  DockerScan:
+  IMAGE_SCAN:
     name: Image Scan with Trivy
     needs: DockerBuild
     runs-on: ubuntu-24.04
@@ -183,7 +183,7 @@ jobs:
         run: |
           docker pull ${{ env.LATEST_TAG }}  
 
-      #image scan with trivy
+      #image scan with trivy sarif format
       - name: Run Trivy Scan
         uses: aquasecurity/trivy-action@master
         with:
@@ -193,12 +193,21 @@ jobs:
           severity: 'CRITICAL,HIGH'
           output: 'trivy-results.sarif'
 
-      
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
+
+      #image scan with table output
+      - name: Run Trivy Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.LATEST_TAG }}  
+          format: 'table'
+          #exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+          output: 'trivy-results.html'
 
   DAST:
     name: Deploy docker and scan DAST with OWASP ZAP
