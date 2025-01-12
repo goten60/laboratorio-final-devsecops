@@ -206,7 +206,9 @@ jobs:
           image-ref: ${{ env.LATEST_TAG }}  
           format: 'table'
           #exit-code: '1'
+          ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
+          cache: 'false'
           #output: 'trivy-results.html'
 
   DAST:
